@@ -23,9 +23,9 @@
 }
 
 .map-view {
-  width: 80%;
-  height: 400px;
+  width: 500px;
+  height:500px;
   border: solid 1px red;
-  margin: 0 auto;
+  padding: 5%;
 }
 
