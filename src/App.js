@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import { createMap } from './actions/map';
-import { Button } from 'react-bootstrap';
 
 const mapStateToProps = (state) => {
   return {
@@ -20,6 +18,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class App extends Component {
+  
   componentDidMount() {
     
     if (!this.props.mapCtrl) {
