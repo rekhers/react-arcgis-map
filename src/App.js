@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { createMap } from './actions/map';
+import { MapContainer } from './MapContainer.js';
+// import FeatureLayer from 'esri/views/FeatureLayer';
+
 
 const mapStateToProps = (state) => {
   return {
@@ -18,19 +21,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class App extends Component {
-  
-  componentDidMount() {
-    
-    if (!this.props.mapCtrl) {
-      this.props.createMap(this.refs.mapView);
-    }
-  }
-
   render() {
     return (
       <div className="App">
-      
-        <div ref='mapView' className='map-view'></div>
+        <MapContainer mapCtrl={this.props.mapCtrl} createMap={this.props.createMap}/>
       </div>
     );
   }

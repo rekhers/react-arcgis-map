@@ -5,9 +5,9 @@ export const createMap = (domNode) => {
   }
 }
 
-export const addLayer = (map) => {
+export const addLayer = (layer) => {
   return {
     type: 'ADD_LAYER',
-    map
+    layer
   }
 }
