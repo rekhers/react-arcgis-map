@@ -14,6 +14,9 @@ const basemap = new EsriMap({
           basemap: "gray"
         })
 
+
+
+//init map with extent from feature layer  
 const view = (domNode) => {
     return new MapView({
             container: domNode,
@@ -30,7 +33,7 @@ const view = (domNode) => {
 }
 
 
-//arcadeExpressionInfos 
+//taken as a parameter in the popup template 
  var arcadeExpressionInfos = [
     {
       name: "pov-percent-arcade",
@@ -48,7 +51,7 @@ const template = {
         title: "{COUNTY} County, {STATE}",
         content: [{ 
           type: "text",
-          text: "<p> Out of a population of {TOTPOP_CY:NumberFormat}, <b> {POP_POVERTY:NumberFormat} </b> live in poverty.</p>" +
+          text: "<p> Out of a population of {TOTPOP_CY:NumberFormat} people, <b> {POP_POVERTY:NumberFormat} </b> live in poverty.</p>" +
           "<ul> <li> Total Population:  <b>{TOTPOP_CY:NumberFormat} </b> </li>" +
           "<li>Conservatives:  <b>{CONSERVATIVE:NumberFormat} </b></li>" +
           "<li>Liberals:  <b>{LIBERAL:NumberFormat} </b></li></ul>",
@@ -109,13 +112,19 @@ const template = {
             digitSeparator: true,
             places: 0
           }
-        }],
-                    expressionInfos: arcadeExpressionInfos
-      }]
+        }]
+      }],
+      expressionInfos: arcadeExpressionInfos
+
     }
 
 
 
+/*
+*
+* Load the feature layer, include all fields and pass in the template
+*
+*/
 const featureLayer = new FeatureLayer({
                 url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/counties_politics_poverty/FeatureServer/0",
                   outFields: ["*"],
@@ -124,13 +133,14 @@ const featureLayer = new FeatureLayer({
 
 
 
-
+//set the map settings to props
 const mapStateToProps = (state) => {
   return {
     mapCtrl: state.map.mapCtrl
   }
 }
 
+//dispatch our create map init function
 const mapDispatchToProps = (dispatch) => {
   return {
     createMap: (view) => {
@@ -140,16 +150,18 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
+//add or remove a layer from the basemap, called by toggle function
 const addLayer = () =>{
     basemap.add(featureLayer);
 }
-
 
 const removeLayer = () =>{
     basemap.remove(featureLayer);
 }
 
 
+//TODO: List all fields in the control div and then take user input to filter down by field or by value
+// (IE areas where more than 50% of the population is conservative and impoverished)
 const filter =() =>{
        featureLayer.queryFeatures().then(function(results){
         console.log(results);  // prints all the client-side graphics to the console
@@ -159,7 +171,8 @@ const filter =() =>{
 
 /*
 * 
-*  This container class from 
+*  Currently this class handles both container and presentational features of the map div -- 
+*  TODO: Split out into a presentational component map and a container that handles the toggle? 
 *
 */
 class MapContainer extends Component{
@@ -167,6 +180,7 @@ class MapContainer extends Component{
   constructor(props){
     super(props);
     this.state = {handleLayer: false};
+    this.toggleLayer = this.toggleLayer.bind(this);
   }
 
 	componentDidMount(props){
@@ -176,19 +190,22 @@ class MapContainer extends Component{
 	}
 
 
-  shouldComponentUpdate(props){
-    if(props.showLayer === true){
+  toggleLayer(props){
+      if(props.showLayer === true){
       addLayer();
       filter();
     } else if(props.showLayer === false) {
       removeLayer();
     }
-    
+  }
+
+
+  shouldComponentUpdate(props){
+    this.toggleLayer(props);
     return true;
   }
 
- 
- 
+
 	render(){
         return(<div ref='mapView' className='map-view'></div>)
 
