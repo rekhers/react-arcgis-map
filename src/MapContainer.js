@@ -6,7 +6,7 @@ import MapView from 'esri/views/MapView';
 import EsriMap from 'esri/Map';
 
 var featureLayer = new FeatureLayer({
-                url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+                url: "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/NYCDemographics/FeatureServer/0"
               });
 
 var basemap = new EsriMap({
@@ -19,11 +19,12 @@ const view = (domNode) => {
             container: domNode,
             map:basemap,
             extent: { // autocasts as new Extent()
-            xmin: -9177811,
-            ymin: 4247000,
-            xmax: -9176791,
-            ymax: 4247784,
-            spatialReference: 102100
+         xmin: -8266100.1323,
+ymin: 4938263.9184,
+xmax: -8204355.7687,
+ymax: 5000180.4062,
+spatialReference: 102100
+
           }
           });
 }

@@ -16,7 +16,7 @@ class ToggleContainer extends Component{
 		return (<div className="toggleContainer"> 
 			      <div className="checkbox">
 				        <label>
-				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> Add Tree Layer
+				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> NYC Demographics Layer
 				        </label>
 				      </div>
 				</div>)
