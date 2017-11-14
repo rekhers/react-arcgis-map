@@ -3,7 +3,7 @@ import './App.css';
 
 /*
 *
-*  Maintains local 
+*  Presentational Component that returns value of checkbox to parent through callback received as props
 * 
 */
 class ToggleContainer extends Component{
@@ -12,9 +12,15 @@ class ToggleContainer extends Component{
 		return (<div className="toggleContainer"> 
 			      <div className="checkbox">
 				        <label>
-				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> Political Affiliation and Poverty by County
+				          <input id="checkbox" className="check_input" type="checkbox" onChange={this.props.toggleLayer} ref="check_me" checked={this.props.layer}/> Political Affiliation and Poverty by County
 				        </label>
 				      </div>
+				   <div className="checkbox"> 
+				   	    <label>
+				          <input className="check_input" type="checkbox" onChange={this.props.togglePoverty} ref="check_me" checked={this.props.poverty}/> Population in Poverty > 10,000
+				        </label>
+				   </div>
+
 				</div>)
 	}
 }

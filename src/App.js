@@ -22,8 +22,6 @@ const mapDispatchToProps = (dispatch) => {
 
 
 
-
-
 /*
 * This parent component maintains local internal state of the checkbox 
 *  and updates with the callback passed to ToggleContainer 
@@ -34,7 +32,11 @@ export class App extends Component {
 	constructor(props){
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
-		this.state = this.props;
+				this.handleChangePoverty = this.handleChangePoverty.bind(this);
+
+		this.state = {showLayer: false, showPoverty: false}
+
+
 	}
   
    componentDidMount(){
@@ -42,14 +44,18 @@ export class App extends Component {
    }
 
  	handleChange(){		
-		this.setState({showLayer: document.querySelector('.check_input').checked });
+		this.setState({showLayer: !this.state.showLayer });
+	}
+
+	 handleChangePoverty(){		
+		this.setState({showPoverty: !this.state.showPoverty });
 	}
 
 
   render() {
     return (<div className="App">
-             <MapContainer showLayer={this.state.showLayer}/>
-             <ToggleContainer onChange={() => this.handleChange}/>
+             <MapContainer showLayer={this.state.showLayer} showPoverty={this.state.showPoverty}/>
+             <ToggleContainer layer={this.state.showLayer} poverty={this.state.showPoverty} togglePoverty={this.handleChangePoverty} toggleLayer={this.handleChange}/>
            </div>
     );
   }

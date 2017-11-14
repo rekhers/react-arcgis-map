@@ -34,15 +34,19 @@ const view = (domNode) => {
 
 
 //taken as a parameter in the popup template 
- var arcadeExpressionInfos = [
-    {
-      name: "pov-percent-arcade",
-      title: "Calculate percentage of poverty",
-      expression:  "Round($feature.POP_POVERTY / $feature.TOTPOP_CY) * 100"
+ // var arcadeExpressionInfos = [
+ //    {
+ //      name: "pov-percent-arcade",
+ //      title: "Calculate percentage of poverty",
+ //      expression:  "Round($feature.POP_POVERTY / $feature.TOTPOP_CY) * 100"
 
-    }
+ //    }
+ //  ];
 
-  ];
+ var popInPoverty = function(key, value, data){
+    debugger
+    return Math.round(data.POP_POVERTY/data.TOTPOP_CY) * 100;
+ }
 
 
 
@@ -51,7 +55,7 @@ const template = {
         title: "{COUNTY} County, {STATE}",
         content: [{ 
           type: "text",
-          text: "<p> Out of a population of {TOTPOP_CY:NumberFormat} people, <b> {POP_POVERTY:NumberFormat} </b> live in poverty.</p>" +
+          text: "<p> Out of a population of {TOTPOP_CY:NumberFormat} people, {POP_POVERTY:popInPoverty}% or <b> {POP_POVERTY:NumberFormat} </b> live in poverty.</p>" +
           "<ul> <li> Total Population:  <b>{TOTPOP_CY:NumberFormat} </b> </li>" +
           "<li>Conservatives:  <b>{CONSERVATIVE:NumberFormat} </b></li>" +
           "<li>Liberals:  <b>{LIBERAL:NumberFormat} </b></li></ul>",
@@ -113,9 +117,7 @@ const template = {
             places: 0
           }
         }]
-      }],
-      expressionInfos: arcadeExpressionInfos
-
+      }]
     }
 
 
@@ -155,18 +157,17 @@ const addLayer = () =>{
     basemap.add(featureLayer);
 }
 
-const removeLayer = () =>{
-    basemap.remove(featureLayer);
-}
+// const removeLayer = () =>{
+//     basemap.remove(featureLayer);
+// }
 
 
 //TODO: List all fields in the control div and then take user input to filter down by field or by value
 // (IE areas where more than 50% of the population is conservative and impoverished)
-const filter =() =>{
-       featureLayer.queryFeatures().then(function(results){
-        console.log(results);  // prints all the client-side graphics to the console
-      });
-  }
+const filter = () =>{
+          featureLayer.definitionExpression = "POP_POVERTY > 10000";
+      };
+
 
 
 /*
@@ -179,7 +180,6 @@ class MapContainer extends Component{
 
   constructor(props){
     super(props);
-    this.state = {handleLayer: false};
     this.toggleLayer = this.toggleLayer.bind(this);
   }
 
@@ -187,22 +187,22 @@ class MapContainer extends Component{
       if(!this.props.mapCtrl){
       this.props.createMap(view(this.refs.mapView));
     }
+
+      addLayer();
 	}
 
+  togglePovertyFilter(props){
+    featureLayer.definitionExpression = props.showPoverty ? "POP_POVERTY > 10000" : "1=1";
+  }
 
   toggleLayer(props){
-      if(props.showLayer === true){
-      addLayer();
-      filter();
-    } else if(props.showLayer === false) {
-      removeLayer();
-    }
+    featureLayer.visible = props.showLayer; 
   }
 
 
-  shouldComponentUpdate(props){
+  componentWillReceiveProps(props){
     this.toggleLayer(props);
-    return true;
+    this.togglePovertyFilter(props);
   }
 
 
