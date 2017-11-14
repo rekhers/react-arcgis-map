@@ -1,20 +1,26 @@
 
 .app{
-	display: flex !important;
-	flex-direction: row;
+
 }
 
 
 .map-view{
-  height: 70vh;
-  width: 70vh;
-  border: solid 1px red;
+  height: 80vh;
+  width: 100vw;
+  	margin: 0;
+
+}
+
+.toggleContainer{
+	padding: 2%;
+	margin-top: -10px;
+	width: 100%;
+	height: 20vw;
+	background-color: #222222;
+	color:#fff;
 }
 
 
-.toggleContainer{
-	height: 5vh;
-	background-color: #222222;
-	color:#fff;
-	width: 20vw; 
+.checkbox{
+	font-size: 2rem;
 }

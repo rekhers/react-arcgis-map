@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 /*
-* This parent component maintains local state of the layer checkbox 
+* This parent component maintains local state of the checkbox by passing a callback to the ToggleContainer function 
 *
 */
 export class App extends Component {

@@ -8,15 +8,11 @@ import './App.css';
 */
 class ToggleContainer extends Component{
 
-	componentDidMount(){
-	
-	}
-
 	render(){
 		return (<div className="toggleContainer"> 
 			      <div className="checkbox">
 				        <label>
-				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> NYC Demographics Layer
+				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> Political Affiltion and Poverty by County
 				        </label>
 				      </div>
 				</div>)
