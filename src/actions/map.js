@@ -1,13 +1,14 @@
-export const createMap = (domNode) => {
+export const createMap = (view) => {
   return {
     type: 'CREATE_MAP',
-    domNode
+    view
   }
 }
 
-export const addLayer = (layer) => {
+export const toggleLayer = (bool) => {
   return {
-    type: 'ADD_LAYER',
-    layer
+    type: 'TOGGLE_LAYER',
+    bool
   }
 }
+

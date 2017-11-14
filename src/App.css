@@ -1,14 +1,20 @@
 
+.app{
+	display: flex;
+	flex-direction:column;
+}
+
+
 .map-view{
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  height: 70vh;
+  width: 70vh;
   border: solid 1px red;
 }
 
 
-.togglePanel{
-
+.toggleContainer{
+	height: 100vh;
+	background-color: #222222;
+	color:#fff;
+	width: 20vw; 
 }

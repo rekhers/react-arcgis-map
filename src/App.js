@@ -1,36 +1,64 @@
 import React, { Component } from 'react';
 import './App.css';
+import { toggleLayer } from './actions/map';
+import MapContainer from './MapContainer';
+import ToggleContainer from './ToggleContainer';
 import { connect } from 'react-redux';
-import { createMap } from './actions/map';
-import { MapContainer } from './MapContainer.js';
-// import FeatureLayer from 'esri/views/FeatureLayer';
 
 
 const mapStateToProps = (state) => {
   return {
-    mapCtrl: state.map.mapCtrl
+    showLayer: state.map.showLayer === undefined ? false : state.map.showLayer
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMap: (domNode) => {
-      dispatch(createMap(domNode))
+    toggleLayer: (layer) => {
+      dispatch(toggleLayer(layer))
     }
   }
 }
 
-class App extends Component {
+
+
+
+
+/*
+* This parent component maintains local state of the layer checkbox 
+*
+*/
+export class App extends Component {
+
+	constructor(props){
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+		this.state = this.props;
+	}
+  
+   componentDidMount(){
+
+   }
+
+ 	handleChange(){		
+		this.setState({showLayer: document.querySelector('.check_input').checked });
+	}
+
+
   render() {
-    return (
-      <div className="App">
-        <MapContainer mapCtrl={this.props.mapCtrl} createMap={this.props.createMap}/>
-      </div>
+    return (<div className="App">
+             <MapContainer showLayer={this.state.showLayer}/>
+             <ToggleContainer onChange={() => this.handleChange}/>
+           </div>
     );
   }
 }
+
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
+
+
+
