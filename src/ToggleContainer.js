@@ -12,7 +12,7 @@ class ToggleContainer extends Component{
 		return (<div className="toggleContainer"> 
 			      <div className="checkbox">
 				        <label>
-				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> Political Affiltion and Poverty by County
+				          <input className="check_input" type="checkbox" onChange={this.props.onChange()} ref="check_me" /> Political Affiliation and Poverty by County
 				        </label>
 				      </div>
 				</div>)
